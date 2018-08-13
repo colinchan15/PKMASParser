@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 
@@ -60,10 +61,13 @@ public class ExcelDemoReadAndWrite {
                 Double textToDouble = Double.parseDouble(text);
                 array[i] = textToDouble;
             }
-
-//            for(int i = 0; i < llist.size(); i++){
-//
-//            }
+            // August 13
+            for (int z = 0; z < array.length; z++){
+                double number = array[z];
+                double sum = 0;
+            }
+            double mean = sum/2;
+            System.out.println(Arrays.toString(array));
 
             // -------------------------------------------------------
 
