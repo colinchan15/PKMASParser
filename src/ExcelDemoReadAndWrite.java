@@ -66,7 +66,7 @@ public class ExcelDemoReadAndWrite {
                 double number = array[z];
                 double sum = 0;
             }
-            double mean = sum/2;
+//            double mean = sum/2;
             System.out.println(Arrays.toString(array));
 
             // -------------------------------------------------------
