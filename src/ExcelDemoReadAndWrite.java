@@ -14,7 +14,6 @@ import java.util.LinkedList;
 
 public class ExcelDemoReadAndWrite {
     public static void main (String[]args){
-        LinkedList llist = new LinkedList();
         String fileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
@@ -22,10 +21,13 @@ public class ExcelDemoReadAndWrite {
         try (InputStream in = new FileInputStream(fileName)){
             Workbook workbook = WorkbookFactory.create(in);
             Sheet inSheet = workbook.getSheetAt(0);
+
+            FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
             DataFormatter formatter = new DataFormatter();
+
             Row inRow;
 
-            Row testRow, nextRow, prevRow;
+            Row row, nextRow, prevRow;
             Cell patient, nextPatient, prevPatient;
 
             Cell inCell;
@@ -45,32 +47,23 @@ public class ExcelDemoReadAndWrite {
             }
             System.out.println("Excel file read");
 
+            Double array [] = new Double[rows];
+
             // -------------------------------------------------------
             Sheet PKMAS = workbook.getSheetAt(0);
 //                for (Row row : PKMAS){
-            for (int r = 2; r < rows; r++) {
 
-                testRow = inSheet.getRow(r);
-                nextRow = inSheet.getRow(r+1);
-                prevRow = inSheet.getRow(r-1);
-
-                inCell = testRow.getCell(5);
-
-                patient = testRow.getCell(2);
-                nextPatient = nextRow.getCell(2);
-                prevPatient = prevRow.getCell(2);
-
-//                System.out.println(patient);
-//                System.out.println(nextPatient);
-//                System.out.println(prevPatient);
-//                System.out.println("next iteration\n");
-
-//                if (patient == nextPatient || patient == prevPatient) {
-//                    System.out.println(inCell);
-//                    llist.add(inCell);
-//                    System.out.println(llist);
-//                }
+            for (int i = 2; i < rows; i++){
+                row = inSheet.getRow(i);
+                inCell = row.getCell(5);
+                String text = formatter.formatCellValue(inCell);
+                Double textToDouble = Double.parseDouble(text);
+                array[i] = textToDouble;
             }
+
+//            for(int i = 0; i < llist.size(); i++){
+//
+//            }
 
             // -------------------------------------------------------
 
