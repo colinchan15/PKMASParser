@@ -15,6 +15,9 @@ import java.util.LinkedList;
 
 public class ExcelDemoReadAndWrite {
     public static void main (String[]args){
+
+        ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
+
         String fileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
@@ -47,12 +50,11 @@ public class ExcelDemoReadAndWrite {
                 }
             }
             System.out.println("Excel file read");
+            // End of reading block
 
             Double array [] = new Double[rows];
 
             // -------------------------------------------------------
-            Sheet PKMAS = workbook.getSheetAt(0);
-//                for (Row row : PKMAS){
 
             for (int i = 2; i < rows; i++){
                 row = inSheet.getRow(i);
@@ -61,16 +63,15 @@ public class ExcelDemoReadAndWrite {
                 Double textToDouble = Double.parseDouble(text);
                 array[i] = textToDouble;
             }
-            // August 13
-            for (int z = 0; z < array.length; z++){
-                double number = array[z];
-                double sum = 0;
-            }
+
+            // calculate mean of velocity
+            System.out.println(edraw.mean(array));
+
 //            double mean = sum/2;
             System.out.println(Arrays.toString(array));
 
             // -------------------------------------------------------
-
+            // write to file
 //            for(int r = 0; r < rows; r++) {
 //                inRow = inSheet.getRow(r);
 //                if(inRow != null) {
@@ -94,11 +95,25 @@ public class ExcelDemoReadAndWrite {
 //                }
 //            }
 //            in.close();
+            // --------------------------------------------------------
 
         }catch(Exception e){
             System.out.println(e);
         }
 
 
+    }
+
+//    public Double[] stringToDouble ()
+
+    public double mean (Double[] array ){
+        double sum = 0;
+        for(int i = 0; i < array.length; i++){
+            if(array[i] != null){
+                double number = array[i];
+                sum += number;
+            }
+        }
+        return sum;
     }
 }
