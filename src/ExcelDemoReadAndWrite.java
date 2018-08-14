@@ -1,16 +1,8 @@
-import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.LinkedList;
 
 
 public class ExcelDemoReadAndWrite {
@@ -54,21 +46,22 @@ public class ExcelDemoReadAndWrite {
 
             Double array [] = new Double[rows];
 
-            // -------------------------------------------------------
-
-            for (int i = 2; i < rows; i++){
-                row = inSheet.getRow(i);
-                inCell = row.getCell(5);
-                String text = formatter.formatCellValue(inCell);
-                Double textToDouble = Double.parseDouble(text);
-                array[i] = textToDouble;
+            // block that calculates mean for each column
+            for (int j = 5; j < 43; j++) {
+                System.out.println();
+                for (int i = 2; i < 6; i++) {
+                    row = inSheet.getRow(i);
+                    inCell = row.getCell(j);
+                    String text = formatter.formatCellValue(inCell);
+                    System.out.println(text);
+                    Double textToDouble = Double.parseDouble(text);
+                    array[i] = textToDouble;
+                    System.out.println(Arrays.toString(array));
+                }
+                // calculating mean for column
+                System.out.println(edraw.sum(array)/edraw.numOfElements(array));
             }
 
-            // calculate mean of velocity
-            System.out.println(edraw.mean(array));
-
-//            double mean = sum/2;
-            System.out.println(Arrays.toString(array));
 
             // -------------------------------------------------------
             // write to file
@@ -101,12 +94,21 @@ public class ExcelDemoReadAndWrite {
             System.out.println(e);
         }
 
-
+// FUNCTIONS
     }
 
-//    public Double[] stringToDouble ()
+    private int numOfElements(Double[]array){
+        int count = 0;
+        for(int i = 0; i < array.length; i++){
+            if(array[i] != null){
+                count++;
+            }
+        }
+        return count;
+    }
 
-    public double mean (Double[] array ){
+
+    private double sum(Double[] array ){
         double sum = 0;
         for(int i = 0; i < array.length; i++){
             if(array[i] != null){
