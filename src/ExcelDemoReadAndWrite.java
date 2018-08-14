@@ -10,7 +10,7 @@ public class ExcelDemoReadAndWrite {
 
         ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
 
-        String fileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS.xlsx";
+        String fileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS_test1.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
         // Reading
@@ -45,21 +45,22 @@ public class ExcelDemoReadAndWrite {
             // End of reading block
 
             Double array [] = new Double[rows];
+            Double meanArray [] = new Double[43];
 
-            // block that calculates mean for each column
-            for (int j = 5; j < 43; j++) {
+            // block that calculates mean for each column - August 14
+            for (int j = 5; j < 48; j++) {
                 System.out.println();
-                for (int i = 2; i < 6; i++) {
+                for (int i = 2; i < 6; i++) { // must change the 6 to be updated to max rows
                     row = inSheet.getRow(i);
                     inCell = row.getCell(j);
                     String text = formatter.formatCellValue(inCell);
-                    System.out.println(text);
                     Double textToDouble = Double.parseDouble(text);
                     array[i] = textToDouble;
-                    System.out.println(Arrays.toString(array));
                 }
                 // calculating mean for column
                 System.out.println(edraw.sum(array)/edraw.numOfElements(array));
+                meanArray[j-5] = edraw.sum(array)/edraw.numOfElements(array);
+                System.out.println(Arrays.toString(meanArray));
             }
 
 
