@@ -11,18 +11,18 @@ public class ExcelDemoReadAndWrite {
         ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
 
         String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/ExcelDemo.xlsx";
-        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA.xlsx";
+        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA_TEST.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
         // Reading
         try (InputStream in = new FileInputStream(inputFileName)){
-            Workbook workbook = WorkbookFactory.create(in);
-            Sheet inSheet = workbook.getSheetAt(0);
+            Workbook inWorkbook = WorkbookFactory.create(in);
+            Sheet inSheet = inWorkbook.getSheetAt(0);
 
             DataFormatter formatter = new DataFormatter();
 
             Row inRow;
-            Row row, binaryOrFollowupRow;
+            Row row1, binaryOrFollowupRow;
 
             Cell inCell, reference, memo;
 
@@ -42,15 +42,15 @@ public class ExcelDemoReadAndWrite {
             System.out.println("Excel file read");
             // End of reading block
 
-            // BLOCK: calculates mean for each column - August 14
+            // BLOCK: calculates mean for each column
             Double array [] = new Double[inTotalRows];
             Double meanArray [] = new Double[43];
 
             for (int j = 5; j < 48; j++) {
                 System.out.println();
                 for (int i = 2; i < inTotalRows; i++) { // must change the 6 to be updated to max rows
-                    row = inSheet.getRow(i);
-                    inCell = row.getCell(j);
+                    row1 = inSheet.getRow(i);
+                    inCell = row1.getCell(j);
                     String text = formatter.formatCellValue(inCell);
                     Double textToDouble = Double.parseDouble(text);
                     array[i] = textToDouble;
@@ -73,22 +73,38 @@ public class ExcelDemoReadAndWrite {
 
 
             // BLOCK: output data
-            Row outRow;
+            InputStream out = new FileInputStream(outputFileName);
+            Workbook outWorkbook = WorkbookFactory.create(out);
+            Sheet outSheet = outWorkbook.getSheetAt(0);
+
+            Row outRow, row2;
+            Cell outCell;
+            int outTotalRows = 0;
+            int outTotalCols = 0;
+            int outTmp = 0;
 
             // BLOCK: Counting number of rows/cells in output file
-            for(int i = 0; i < 10 || i < inTotalRows; i++) {
-                outRow = inSheet.getRow(i);
+            // THIS BLOCK IS REFERENCING THE ORIGINAL ROW COUNTING FROM INPUT FILE
+            for(int i = 0; i < 10 || i < outTotalRows; i++) {
+                outRow = outSheet.getRow(i);
                 if(outRow != null) {
-                    inTmp = inSheet.getRow(i).getPhysicalNumberOfCells();
-                    if(inTmp > inTotalCols) inTotalCols = inTmp;
+                    outTmp = outSheet.getRow(i).getPhysicalNumberOfCells();
+                    if(outTmp > outTotalCols) outTotalCols = outTmp;
                 }
             }
 
 
             // check if baseline or follow-up first
-            if (edraw.isBaseline(memoText) == true){
-                for(int r = 4; r < inTotalRows; r++){
-
+            if (edraw.isBaseline(memoText) == true) {
+                if (edraw.isSelfPace(referenceText) == true) {
+                    for (int r = 4; r < outTotalRows; r++) {
+                        row2 = outSheet.getRow(r);
+                        if (row2.getCell(3) == null) { // if the velocity cell is == null, then set cell value to array established and then break
+                            for (int t = 3; t < 26; t++) {
+                                outCell = row2.getCell(t);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -116,7 +132,7 @@ public class ExcelDemoReadAndWrite {
 //                    }
 //                }
 //            }
-//            in.close();
+            in.close();
             // --------------------------------------------------------
 
         }catch(Exception e){
