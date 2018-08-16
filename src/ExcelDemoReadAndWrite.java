@@ -10,47 +10,45 @@ public class ExcelDemoReadAndWrite {
 
         ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
 
-        String fileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS_test1.xlsx";
+        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/ExcelDemo.xlsx";
+        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
         // Reading
-        try (InputStream in = new FileInputStream(fileName)){
+        try (InputStream in = new FileInputStream(inputFileName)){
             Workbook workbook = WorkbookFactory.create(in);
             Sheet inSheet = workbook.getSheetAt(0);
 
-            FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
             DataFormatter formatter = new DataFormatter();
 
             Row inRow;
+            Row row, binaryOrFollowupRow;
 
-            Row row, nextRow, prevRow;
-            Cell patient, nextPatient, prevPatient;
-
-            Cell inCell;
+            Cell inCell, reference, memo;
 
             // Count number of rows
-            int rows = inSheet.getPhysicalNumberOfRows();
-            int cols = 0;
-            int tmp = 0;
+            int inTotalRows = inSheet.getPhysicalNumberOfRows();
+            int inTotalCols = 0;
+            int inTmp = 0;
 
-            // Counting number of rows/cells
-            for(int i = 0; i < 10 || i < rows; i++) {
+            // BLOCK: Counting number of rows/cells in input file
+            for(int i = 0; i < 10 || i < inTotalRows; i++) {
                 inRow = inSheet.getRow(i);
                 if(inRow != null) {
-                    tmp = inSheet.getRow(i).getPhysicalNumberOfCells();
-                    if(tmp > cols) cols = tmp;
+                    inTmp = inSheet.getRow(i).getPhysicalNumberOfCells();
+                    if(inTmp > inTotalCols) inTotalCols = inTmp;
                 }
             }
             System.out.println("Excel file read");
             // End of reading block
 
-            Double array [] = new Double[rows];
+            // BLOCK: calculates mean for each column - August 14
+            Double array [] = new Double[inTotalRows];
             Double meanArray [] = new Double[43];
 
-            // block that calculates mean for each column - August 14
             for (int j = 5; j < 48; j++) {
                 System.out.println();
-                for (int i = 2; i < 6; i++) { // must change the 6 to be updated to max rows
+                for (int i = 2; i < inTotalRows; i++) { // must change the 6 to be updated to max rows
                     row = inSheet.getRow(i);
                     inCell = row.getCell(j);
                     String text = formatter.formatCellValue(inCell);
@@ -63,6 +61,36 @@ public class ExcelDemoReadAndWrite {
                 System.out.println(Arrays.toString(meanArray));
             }
 
+            // BLOCK: check if baseline value or follow-up
+            binaryOrFollowupRow = inSheet.getRow(2);
+            reference = binaryOrFollowupRow.getCell(3);
+            String referenceText = formatter.formatCellValue(reference);
+            memo = binaryOrFollowupRow.getCell(4);
+            String memoText = formatter.formatCellValue(memo);
+
+
+
+
+
+            // BLOCK: output data
+            Row outRow;
+
+            // BLOCK: Counting number of rows/cells in output file
+            for(int i = 0; i < 10 || i < inTotalRows; i++) {
+                outRow = inSheet.getRow(i);
+                if(outRow != null) {
+                    inTmp = inSheet.getRow(i).getPhysicalNumberOfCells();
+                    if(inTmp > inTotalCols) inTotalCols = inTmp;
+                }
+            }
+
+
+            // check if baseline or follow-up first
+            if (edraw.isBaseline(memoText) == true){
+                for(int r = 4; r < inTotalRows; r++){
+
+                }
+            }
 
             // -------------------------------------------------------
             // write to file
@@ -118,5 +146,25 @@ public class ExcelDemoReadAndWrite {
             }
         }
         return sum;
+    }
+
+    private boolean isBaseline(String memoText){
+        String string = "baseline";
+        if(memoText.toLowerCase().equals(string)){
+            return true;
+        }else {
+            System.out.println(memoText.toLowerCase());
+            return false;
+        }
+    }
+
+    private boolean isSelfPace (String referenceText){
+        String string = "selfpace";
+        if(referenceText.toLowerCase().replaceAll("\\s", "").equals(string)){
+            return true;
+        }else{
+            System.out.println(referenceText.toLowerCase().replaceAll("\\s",""));
+            return false;
+        }
     }
 }
