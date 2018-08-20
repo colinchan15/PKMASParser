@@ -12,7 +12,7 @@ public class ExcelDemoReadAndWrite {
 
         ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
 
-        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/ExcelDemo.xlsx";
+        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS_test2.xlsx";
         String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA_TEST.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
@@ -46,9 +46,9 @@ public class ExcelDemoReadAndWrite {
 
             // BLOCK: calculates mean for each column
             Double array [] = new Double[inTotalRows];
-            Double meanArray [] = new Double[43];
+            Double meanArray [] = new Double[44];
 
-            for (int j = 5; j < 48; j++) {
+            for (int j = 5; j < 49; j++) {
 //                System.out.println();
                 for (int i = 2; i < inTotalRows; i++) { // must change the 6 to be updated to max rows
                     row1 = inSheet.getRow(i);
@@ -61,8 +61,8 @@ public class ExcelDemoReadAndWrite {
                 // test print array contents
 //                System.out.println(edraw.sum(array)/edraw.numOfElements(array));
                 meanArray[j-5] = edraw.sum(array)/edraw.numOfElements(array);
-                // test print array
-//                System.out.println(Arrays.toString(meanArray));
+                // test print array --TEST--
+                System.out.println(Arrays.toString(meanArray));
             }
 
             // BLOCK: check if baseline value or follow-up
@@ -83,7 +83,7 @@ public class ExcelDemoReadAndWrite {
 
             Row outRow, row2;
             Cell outCell;
-            int outTotalRows = 0;
+            int outTotalRows = outSheet.getPhysicalNumberOfRows();
             int outTotalCols = 0;
             int outTmp = 0;
 
@@ -100,11 +100,11 @@ public class ExcelDemoReadAndWrite {
 
             // check if baseline or follow-up first
             if (edraw.isBaseline(memoText) == true) {
-                if (edraw.isSelfPace(referenceText) == true) {
+                if (edraw.isSelfPace(referenceText) == true) { // check if reference text = self pace
                     for (int r = 4; r < outTotalRows; r++) {
                         row2 = outSheet.getRow(r);
                         if (row2.getCell(3) == null) { // if the velocity cell is == null, then set cell value to array established and then break
-                            for (int t = 3; t < 26; t++) {
+                            for (int t = 3; t <= 47; t++) {
                                 outCell = row2.createCell(t); // maybe this line wrong?
                                 outCell.setCellValue(meanArray[t-3]);
                                 FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
