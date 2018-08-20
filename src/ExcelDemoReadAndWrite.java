@@ -144,7 +144,9 @@ public class ExcelDemoReadAndWrite {
                     }
                 }
             }else if(edraw.isFollowUp(memoText) == true){
-                if(edraw.isSelfPace(memoText) == true){
+                System.out.println(true);
+                if(edraw.isSelfPace(referenceText) == true){
+                    System.out.println(true);
                     for(int r = 4; r < outTotalRows2; r++){
                         row2 = outSheet2.getRow(r);
                         if(row2.getCell(3) == null){
