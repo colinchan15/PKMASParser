@@ -12,8 +12,8 @@ public class ExcelDemoReadAndWrite {
 
         ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
 
-        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS_test2.xlsx";
-        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA_TEST.xlsx";
+        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS.xlsx";
+        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA_TEST_2.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
         // Reading
@@ -44,7 +44,7 @@ public class ExcelDemoReadAndWrite {
             System.out.println("Excel file read");
             // End of reading block
 
-            // BLOCK: calculates mean for each column
+            // BLOCK 1: calculates mean for each column
             Double array [] = new Double[inTotalRows];
             Double meanArray [] = new Double[44];
 
@@ -65,7 +65,7 @@ public class ExcelDemoReadAndWrite {
                 System.out.println(Arrays.toString(meanArray));
             }
 
-            // BLOCK: check if baseline value or follow-up
+            // BLOCK 2: check if baseline value or follow-up
             binaryOrFollowupRow = inSheet.getRow(2);
             reference = binaryOrFollowupRow.getCell(3);
             String referenceText = formatter.formatCellValue(reference);
@@ -74,9 +74,7 @@ public class ExcelDemoReadAndWrite {
 
 
 
-
-
-            // BLOCK: output data
+            // BLOCK 3: output data
             InputStream outRead = new FileInputStream(outputFileName);
             Workbook outWorkbook = WorkbookFactory.create(outRead);
             Sheet outSheet = outWorkbook.getSheetAt(0);
@@ -87,7 +85,7 @@ public class ExcelDemoReadAndWrite {
             int outTotalCols = 0;
             int outTmp = 0;
 
-            // BLOCK: Counting number of rows/cells in output file
+            // BLOCK 4: Counting number of rows/cells in output file
             // THIS BLOCK IS REFERENCING THE ORIGINAL ROW COUNTING FROM INPUT FILE
             for(int i = 0; i < 10 || i < outTotalRows; i++) {
                 outRow = outSheet.getRow(i);
@@ -114,6 +112,24 @@ public class ExcelDemoReadAndWrite {
                             break;
                         }
                     }
+                }else if (edraw.isFastPace(referenceText) == true){
+                    for (int r = 4; r < outTotalRows; r++) {
+                        System.out.println(outTotalRows);
+                        row2 = outSheet.getRow(r);
+                        if (row2.getCell(50) == null) { // if the velocity cell is == null, then set cell value to array established and then break
+                            System.out.println("Line 118 executed: " + true);
+                            for (int u = 49; u < 93; u++) {
+                                System.out.println("second for loop executed: " + true);
+                                outCell = row2.createCell(u); // maybe this line wrong?
+                                outCell.setCellValue(meanArray[u-49]);
+                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+                                outWorkbook.write(outWrite);
+                                outWrite.close();
+                            }
+                            break;
+                        }
+                    }
+
                 }
             }
 
@@ -175,6 +191,16 @@ public class ExcelDemoReadAndWrite {
 
     private boolean isBaseline(String memoText){
         String string = "baseline";
+        if(memoText.toLowerCase().replaceAll("\\s","").equals(string)){
+            return true;
+        }else {
+            System.out.println("Not equal to baseline");
+            return false;
+        }
+    }
+
+    private boolean isFollowUp(String memoText){
+        String string = "follow-up";
         if(memoText.toLowerCase().equals(string)){
             return true;
         }else {
@@ -186,6 +212,17 @@ public class ExcelDemoReadAndWrite {
     private boolean isSelfPace (String referenceText){
         String string = "selfpace";
         if(referenceText.toLowerCase().replaceAll("\\s", "").equals(string)){
+            return true;
+        }else{
+//            System.out.println(referenceText.toLowerCase().replaceAll("\\s",""));
+            return false;
+        }
+    }
+
+    private boolean isFastPace(String referenceText){
+        String string = "fastpace";
+        if(referenceText.toLowerCase().replaceAll("\\s", "").equals(string)){
+            System.out.println("is fast pace executed: " + true);
             return true;
         }else{
             System.out.println(referenceText.toLowerCase().replaceAll("\\s",""));
