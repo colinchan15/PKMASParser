@@ -13,7 +13,7 @@ public class ExcelDemoReadAndWrite {
         ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
 
         String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS.xlsx";
-        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA_TEST_2.xlsx";
+        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA_TEST.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
         // Reading
@@ -53,9 +53,13 @@ public class ExcelDemoReadAndWrite {
                 for (int i = 2; i < inTotalRows; i++) { // must change the 6 to be updated to max rows
                     row1 = inSheet.getRow(i);
                     inCell = row1.getCell(j);
-                    String text = formatter.formatCellValue(inCell);
-                    Double textToDouble = Double.parseDouble(text);
-                    array[i] = textToDouble;
+                    if(inCell != null) {
+                        String text = formatter.formatCellValue(inCell);
+                        Double textToDouble = Double.parseDouble(text);
+                        array[i] = textToDouble;
+                    }else{
+                        continue;
+                    }
                 }
                 // calculating mean for column
                 // test print array contents
@@ -77,30 +81,42 @@ public class ExcelDemoReadAndWrite {
             // BLOCK 3: output data
             InputStream outRead = new FileInputStream(outputFileName);
             Workbook outWorkbook = WorkbookFactory.create(outRead);
-            Sheet outSheet = outWorkbook.getSheetAt(0);
+            Sheet outSheet1 = outWorkbook.getSheetAt(0);
+            Sheet outSheet2 = outWorkbook.getSheetAt(1);
 
-            Row outRow, row2;
+            Row outRow1, outRow2, row2;
             Cell outCell;
-            int outTotalRows = outSheet.getPhysicalNumberOfRows();
-            int outTotalCols = 0;
-            int outTmp = 0;
+            int outTotalRows1 = outSheet1.getPhysicalNumberOfRows();
+            int outTotalRows2 = outSheet2.getPhysicalNumberOfRows();
+            int outTotalCols1 = 0;
+            int outTotalCols2 = 0;
+            int outTmp1 = 0;
+            int outTmp2 = 0;
 
             // BLOCK 4: Counting number of rows/cells in output file
             // THIS BLOCK IS REFERENCING THE ORIGINAL ROW COUNTING FROM INPUT FILE
-            for(int i = 0; i < 10 || i < outTotalRows; i++) {
-                outRow = outSheet.getRow(i);
-                if(outRow != null) {
-                    outTmp = outSheet.getRow(i).getPhysicalNumberOfCells();
-                    if(outTmp > outTotalCols) outTotalCols = outTmp;
+            for(int i = 0; i < 10 || i < outTotalRows1; i++) {
+                outRow1 = outSheet1.getRow(i);
+                if(outRow1 != null) {
+                    outTmp1 = outSheet1.getRow(i).getPhysicalNumberOfCells();
+                    if(outTmp1 > outTotalCols1) outTotalCols1 = outTmp1;
                 }
             }
+
+            for(int i = 0; i < 10 || i < outTotalRows2; i++){
+                outRow2 = outSheet2.getRow(i);
+                    if(outRow2 != null){
+                        outTmp2 = outSheet2.getRow(i).getPhysicalNumberOfCells();
+                        if(outTmp2 > outTotalCols2) outTotalCols2 = outTmp2;
+                    }
+                }
 
 
             // check if baseline or follow-up first
             if (edraw.isBaseline(memoText) == true) {
                 if (edraw.isSelfPace(referenceText) == true) { // check if reference text = self pace
-                    for (int r = 4; r < outTotalRows; r++) {
-                        row2 = outSheet.getRow(r);
+                    for (int r = 4; r < outTotalRows1; r++) {
+                        row2 = outSheet1.getRow(r);
                         if (row2.getCell(3) == null) { // if the velocity cell is == null, then set cell value to array established and then break
                             for (int t = 3; t <= 47; t++) {
                                 outCell = row2.createCell(t); // maybe this line wrong?
@@ -113,8 +129,8 @@ public class ExcelDemoReadAndWrite {
                         }
                     }
                 }else if (edraw.isFastPace(referenceText) == true){
-                    for (int r = 4; r < outTotalRows; r++) {
-                        row2 = outSheet.getRow(r);
+                    for (int r = 4; r < outTotalRows1; r++) {
+                        row2 = outSheet1.getRow(r);
                         if (row2.getCell(50) == null) { // if the velocity cell is == null, then set cell value to array established and then break
                             for (int u = 49; u < 93; u++) {
                                 outCell = row2.createCell(u); // maybe this line wrong?
@@ -126,7 +142,21 @@ public class ExcelDemoReadAndWrite {
                             break;
                         }
                     }
-
+                }
+            }else if(edraw.isFollowUp(memoText) == true){
+                if(edraw.isSelfPace(memoText) == true){
+                    for(int r = 4; r < outTotalRows2; r++){
+                        row2 = outSheet2.getRow(r);
+                        if(row2.getCell(3) == null){
+                            for(int u = 3; u <= 47; u++){
+                                outCell = row2.createCell(u);
+                                outCell.setCellValue(meanArray[u-3]);
+                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+                                outWorkbook.write(outWrite);
+                                outWrite.close();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -211,7 +241,6 @@ public class ExcelDemoReadAndWrite {
         if(referenceText.toLowerCase().replaceAll("\\s", "").equals(string)){
             return true;
         }else{
-//            System.out.println(referenceText.toLowerCase().replaceAll("\\s",""));
             return false;
         }
     }
