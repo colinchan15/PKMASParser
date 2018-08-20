@@ -114,12 +114,9 @@ public class ExcelDemoReadAndWrite {
                     }
                 }else if (edraw.isFastPace(referenceText) == true){
                     for (int r = 4; r < outTotalRows; r++) {
-                        System.out.println(outTotalRows);
                         row2 = outSheet.getRow(r);
                         if (row2.getCell(50) == null) { // if the velocity cell is == null, then set cell value to array established and then break
-                            System.out.println("Line 118 executed: " + true);
                             for (int u = 49; u < 93; u++) {
-                                System.out.println("second for loop executed: " + true);
                                 outCell = row2.createCell(u); // maybe this line wrong?
                                 outCell.setCellValue(meanArray[u-49]);
                                 FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
@@ -222,7 +219,6 @@ public class ExcelDemoReadAndWrite {
     private boolean isFastPace(String referenceText){
         String string = "fastpace";
         if(referenceText.toLowerCase().replaceAll("\\s", "").equals(string)){
-            System.out.println("is fast pace executed: " + true);
             return true;
         }else{
             System.out.println(referenceText.toLowerCase().replaceAll("\\s",""));
