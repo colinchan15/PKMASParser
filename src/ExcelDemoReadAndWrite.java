@@ -13,7 +13,7 @@ public class ExcelDemoReadAndWrite {
         ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
 
         String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS.xlsx";
-        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA_TEST.xlsx";
+        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA_TEST_BACKUP.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
         // Reading
@@ -49,8 +49,7 @@ public class ExcelDemoReadAndWrite {
             Double meanArray [] = new Double[44];
 
             for (int j = 5; j < 49; j++) {
-//                System.out.println();
-                for (int i = 2; i < inTotalRows; i++) { // must change the 6 to be updated to max rows
+                for (int i = 2; i < inTotalRows; i++) {
                     row1 = inSheet.getRow(i);
                     inCell = row1.getCell(j);
                     if(inCell != null) {
@@ -120,7 +119,7 @@ public class ExcelDemoReadAndWrite {
                         if (row2.getCell(3) == null) { // if the velocity cell is == null, then set cell value to array established and then break
                             for (int t = 3; t <= 47; t++) {
                                 outCell = row2.createCell(t); // maybe this line wrong?
-                                outCell.setCellValue(meanArray[t-3]);
+                                outCell.setCellValue(meanArray[t - 3]);
                                 FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
                                 outWorkbook.write(outWrite);
                                 outWrite.close();
@@ -128,13 +127,13 @@ public class ExcelDemoReadAndWrite {
                             break;
                         }
                     }
-                }else if (edraw.isFastPace(referenceText) == true){
+                } else if (edraw.isFastPace(referenceText) == true) {
                     for (int r = 4; r < outTotalRows1; r++) {
                         row2 = outSheet1.getRow(r);
                         if (row2.getCell(50) == null) { // if the velocity cell is == null, then set cell value to array established and then break
-                            for (int u = 49; u < 93; u++) {
+                            for (int u = 50; u < 94; u++) {
                                 outCell = row2.createCell(u); // maybe this line wrong?
-                                outCell.setCellValue(meanArray[u-49]);
+                                outCell.setCellValue(meanArray[u - 50]);
                                 FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
                                 outWorkbook.write(outWrite);
                                 outWrite.close();
@@ -144,9 +143,10 @@ public class ExcelDemoReadAndWrite {
                     }
                 }
             }else if(edraw.isFollowUp(memoText) == true){
-                System.out.println(true);
+                System.out.println("follow up block reached");
+
                 if(edraw.isSelfPace(referenceText) == true){
-                    System.out.println(true);
+                    System.out.println("follow up self pace block reached");
                     for(int r = 4; r < outTotalRows2; r++){
                         row2 = outSheet2.getRow(r);
                         if(row2.getCell(3) == null){
@@ -157,6 +157,22 @@ public class ExcelDemoReadAndWrite {
                                 outWorkbook.write(outWrite);
                                 outWrite.close();
                             }
+                            break;
+                        }
+                    }
+                }else if(edraw.isFastPace(referenceText) == true){
+                    System.out.println("follow up fast pace block reached");
+                    for(int u = 4; u < outTotalRows2; u++){
+                        row2 = outSheet2.getRow(u);
+                        if(row2.getCell(50) == null){
+                            for(int q = 50; q < 94; q++){
+                                outCell = row2.createCell(q);
+                                outCell.setCellValue(meanArray[q-50]);
+                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+                                outWorkbook.write(outWrite);
+                                outWrite.close();
+                            }
+                            break;
                         }
                     }
                 }
