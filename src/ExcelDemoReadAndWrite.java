@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 
 public class ExcelDemoReadAndWrite {
-    public static void main (String[]args){
+    public static void main(String[] args) {
 
         ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
 
@@ -17,7 +17,7 @@ public class ExcelDemoReadAndWrite {
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
         // Reading
-        try (InputStream in = new FileInputStream(inputFileName)){
+        try (InputStream in = new FileInputStream(inputFileName)) {
             Workbook inWorkbook = WorkbookFactory.create(in);
             Sheet inSheet = inWorkbook.getSheetAt(0);
 
@@ -34,36 +34,36 @@ public class ExcelDemoReadAndWrite {
             int inTmp = 0;
 
             // BLOCK: Counting number of rows/cells in input file
-            for(int i = 0; i < 10 || i < inTotalRows; i++) {
+            for (int i = 0; i < 10 || i < inTotalRows; i++) {
                 inRow = inSheet.getRow(i);
-                if(inRow != null) {
+                if (inRow != null) {
                     inTmp = inSheet.getRow(i).getPhysicalNumberOfCells();
-                    if(inTmp > inTotalCols) inTotalCols = inTmp;
+                    if (inTmp > inTotalCols) inTotalCols = inTmp;
                 }
             }
             System.out.println("Excel file read");
             // End of reading block
 
             // BLOCK 1: calculates mean for each column
-            Double array [] = new Double[inTotalRows];
-            Double meanArray [] = new Double[44];
+            Double array[] = new Double[inTotalRows];
+            Double meanArray[] = new Double[44];
 
             for (int j = 5; j < 49; j++) {
                 for (int i = 2; i < inTotalRows; i++) {
                     row1 = inSheet.getRow(i);
                     inCell = row1.getCell(j);
-                    if(inCell != null) {
+                    if (inCell != null) {
                         String text = formatter.formatCellValue(inCell);
                         Double textToDouble = Double.parseDouble(text);
                         array[i] = textToDouble;
-                    }else{
+                    } else {
                         continue;
                     }
                 }
                 // calculating mean for column
                 // test print array contents
 //                System.out.println(edraw.sum(array)/edraw.numOfElements(array));
-                meanArray[j-5] = edraw.sum(array)/edraw.numOfElements(array);
+                meanArray[j - 5] = edraw.sum(array) / edraw.numOfElements(array);
                 // test print array --TEST--
                 System.out.println(Arrays.toString(meanArray));
             }
@@ -74,7 +74,6 @@ public class ExcelDemoReadAndWrite {
             String referenceText = formatter.formatCellValue(reference);
             memo = binaryOrFollowupRow.getCell(4);
             String memoText = formatter.formatCellValue(memo);
-
 
 
             // BLOCK 3: output data
@@ -94,21 +93,21 @@ public class ExcelDemoReadAndWrite {
 
             // BLOCK 4: Counting number of rows/cells in output file
             // THIS BLOCK IS REFERENCING THE ORIGINAL ROW COUNTING FROM INPUT FILE
-            for(int i = 0; i < 10 || i < outTotalRows1; i++) {
+            for (int i = 0; i < 10 || i < outTotalRows1; i++) {
                 outRow1 = outSheet1.getRow(i);
-                if(outRow1 != null) {
+                if (outRow1 != null) {
                     outTmp1 = outSheet1.getRow(i).getPhysicalNumberOfCells();
-                    if(outTmp1 > outTotalCols1) outTotalCols1 = outTmp1;
+                    if (outTmp1 > outTotalCols1) outTotalCols1 = outTmp1;
                 }
             }
 
-            for(int i = 0; i < 10 || i < outTotalRows2; i++){
+            for (int i = 0; i < 10 || i < outTotalRows2; i++) {
                 outRow2 = outSheet2.getRow(i);
-                    if(outRow2 != null){
-                        outTmp2 = outSheet2.getRow(i).getPhysicalNumberOfCells();
-                        if(outTmp2 > outTotalCols2) outTotalCols2 = outTmp2;
-                    }
+                if (outRow2 != null) {
+                    outTmp2 = outSheet2.getRow(i).getPhysicalNumberOfCells();
+                    if (outTmp2 > outTotalCols2) outTotalCols2 = outTmp2;
                 }
+            }
 
 
             // check if baseline or follow-up first
@@ -142,17 +141,50 @@ public class ExcelDemoReadAndWrite {
                         }
                     }
                 }
-            }else if(edraw.isFollowUp(memoText) == true){
+            } else if (edraw.isFollowUp(memoText) == true) {
                 System.out.println("follow up block reached");
 
-                if(edraw.isSelfPace(referenceText) == true){
+                if (edraw.isSelfPace(referenceText) == true) {
                     System.out.println("follow up self pace block reached");
-                    for(int r = 4; r < outTotalRows2; r++){
+                    for (int r = 4; r < outTotalRows2; r++) {
                         row2 = outSheet2.getRow(r);
-                        if(row2.getCell(3) == null){
-                            for(int u = 3; u <= 47; u++){
+                        if (row2.getCell(3) == null) {
+                            for (int u = 3; u <= 47; u++) {
                                 outCell = row2.createCell(u);
-                                outCell.setCellValue(meanArray[u-3]);
+                                outCell.setCellValue(meanArray[u - 3]);
+                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+                                outWorkbook.write(outWrite);
+                                outWrite.close();
+                            }
+                            break;
+                        }
+                    }
+                } else if (edraw.isFastPace(referenceText) == true) {
+                    System.out.println("follow up fast pace block reached");
+                    for (int u = 4; u < outTotalRows2; u++) {
+                        row2 = outSheet2.getRow(u);
+                        if (row2.getCell(50) == null) {
+                            for (int q = 50; q < 94; q++) {
+                                outCell = row2.createCell(q);
+                                outCell.setCellValue(meanArray[q - 50]);
+                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+                                outWorkbook.write(outWrite);
+                                outWrite.close();
+                            }
+                            break;
+                        }
+                    }
+                }
+            } else if (edraw.isSecondFollowUp(memoText) == true) {
+                System.out.println("second follow up block reached");
+                if (edraw.isSelfPace(referenceText) == true) {
+                    System.out.println("follow up self pace block reached");
+                    for (int r = 4; r < outTotalRows2; r++) {
+                        row2 = outSheet2.getRow(r);
+                        if (row2.getCell(97) == null) {
+                            for (int u = 97; u <= 141; u++) {
+                                outCell = row2.createCell(u);
+                                outCell.setCellValue(meanArray[u - 97]);
                                 FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
                                 outWorkbook.write(outWrite);
                                 outWrite.close();
@@ -162,12 +194,12 @@ public class ExcelDemoReadAndWrite {
                     }
                 }else if(edraw.isFastPace(referenceText) == true){
                     System.out.println("follow up fast pace block reached");
-                    for(int u = 4; u < outTotalRows2; u++){
-                        row2 = outSheet2.getRow(u);
-                        if(row2.getCell(50) == null){
-                            for(int q = 50; q < 94; q++){
-                                outCell = row2.createCell(q);
-                                outCell.setCellValue(meanArray[q-50]);
+                    for (int r = 4; r < outTotalRows2; r++) {
+                        row2 = outSheet2.getRow(r);
+                        if (row2.getCell(144) == null) {
+                            for (int u = 144; u <= 188; u++) {
+                                outCell = row2.createCell(u);
+                                outCell.setCellValue(meanArray[u - 144]);
                                 FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
                                 outWorkbook.write(outWrite);
                                 outWrite.close();
@@ -178,44 +210,18 @@ public class ExcelDemoReadAndWrite {
                 }
             }
 
-            // -------------------------------------------------------
-            // write to file
-//            for(int r = 0; r < rows; r++) {
-//                inRow = inSheet.getRow(r);
-//                if(inRow != null) {
-//                    for(int c = 0; c < cols; c++) {
-//                        inCell = inRow.getCell((short)c);
-//                        if(inCell != null) {
-//                            // Writing execution block here
-//
-////                                Sheet outSheet = workbook.createSheet("Ripon");
-////                                Row outRow = outSheet.createRow(0);
-////                                Cell cell = outRow.createCell (0);
-////                                cell.setCellValue(3.5);
-//                                FileOutputStream out = new FileOutputStream(new File("C:/Users/Protokinetics/Desktop/Colin/ExcelDemo.xlsx"));
-//                                workbook.write(out);
-//                                out.close();
-//
-//                            System.out.println("Excel file outputted");
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-            in.close();
-            // --------------------------------------------------------
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
 
 // FUNCTIONS
     }
 
-    private int numOfElements(Double[]array){
+    private int numOfElements(Double[] array) {
         int count = 0;
-        for(int i = 0; i < array.length; i++){
-            if(array[i] != null){
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
                 count++;
             }
         }
@@ -223,10 +229,10 @@ public class ExcelDemoReadAndWrite {
     }
 
 
-    private double sum(Double[] array ){
+    private double sum(Double[] array) {
         double sum = 0;
-        for(int i = 0; i < array.length; i++){
-            if(array[i] != null){
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
                 double number = array[i];
                 sum += number;
             }
@@ -234,41 +240,49 @@ public class ExcelDemoReadAndWrite {
         return sum;
     }
 
-    private boolean isBaseline(String memoText){
+    private boolean isBaseline(String memoText) {
         String string = "baseline";
-        if(memoText.toLowerCase().replaceAll("\\s","").equals(string)){
+        if (memoText.toLowerCase().replaceAll("\\s", "").equals(string)) {
             return true;
-        }else {
-            System.out.println("Not equal to baseline");
+        } else {
             return false;
         }
     }
 
-    private boolean isFollowUp(String memoText){
+    private boolean isFollowUp(String memoText) {
         String string = "follow-up";
-        if(memoText.toLowerCase().equals(string)){
+        String string2 = "1yearfollowup";
+        if (memoText.toLowerCase().replaceAll("\\s", "").equals(string) || memoText.toLowerCase().replaceAll("\\s", "").equals(string2)) {
             return true;
-        }else {
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isSecondFollowUp(String memoText) {
+        if (memoText.toLowerCase().replaceAll("\\s", "").equals("2yearfollowup")) {
+            return true;
+        } else {
             System.out.println(memoText.toLowerCase());
             return false;
         }
     }
 
-    private boolean isSelfPace (String referenceText){
+    private boolean isSelfPace(String referenceText) {
         String string = "selfpace";
-        if(referenceText.toLowerCase().replaceAll("\\s", "").equals(string)){
+        if (referenceText.toLowerCase().replaceAll("\\s", "").equals(string)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    private boolean isFastPace(String referenceText){
+    private boolean isFastPace(String referenceText) {
         String string = "fastpace";
-        if(referenceText.toLowerCase().replaceAll("\\s", "").equals(string)){
+        if (referenceText.toLowerCase().replaceAll("\\s", "").equals(string)) {
             return true;
-        }else{
-            System.out.println(referenceText.toLowerCase().replaceAll("\\s",""));
+        } else {
+            System.out.println(referenceText.toLowerCase().replaceAll("\\s", ""));
             return false;
         }
     }
