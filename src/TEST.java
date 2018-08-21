@@ -48,6 +48,8 @@ public class TEST {
             // BLOCK 1: calculates mean for each column
             Double BSarray[] = new Double[inTotalRows];
             Double BFarray[] = new Double[inTotalRows];
+            Double FFSarray[] = new Double[inTotalRows];
+            Double FFFarray[] = new Double [inTotalRows];
 
 
             Double meanArray[] = new Double[44];
@@ -85,29 +87,31 @@ public class TEST {
                         } else {
                             continue;
                         }
-//                    }else if (memoCheckText.equals("followup") && referenceCheckText.equals("selfpace")) {
-//                        if (inCell != null) {
-//                            String text = formatter.formatCellValue(inCell);
-//                            Double textToDouble = Double.parseDouble(text);
-//                            BSarray[i] = textToDouble;
-//                        } else {
-//                            continue;
-//                        }
-//                    }else if (memoCheckText.equals("followup") && referenceCheckText.equals("fastpace")) {
-//                        if (inCell != null) {
-//                            String text = formatter.formatCellValue(inCell);
-//                            Double textToDouble = Double.parseDouble(text);
-//                            BSarray[i] = textToDouble;
-//                        } else {
-//                            continue;
-//                        }
+                    }else if (memoCheckText.equals("follow-up") && referenceCheckText.equals("selfpace")) {
+                        if (inCell != null) {
+                            String text = formatter.formatCellValue(inCell);
+                            Double textToDouble = Double.parseDouble(text);
+                            FFSarray[i] = textToDouble;
+                        } else {
+                            continue;
+                        }
+                    }else if (memoCheckText.equals("follow-up") && referenceCheckText.equals("fastpace")) {
+                        if (inCell != null) {
+                            String text = formatter.formatCellValue(inCell);
+                            Double textToDouble = Double.parseDouble(text);
+                            FFFarray[i] = textToDouble;
+                        } else {
+                            continue;
+                        }
                     }
                 }
                 // calculating mean for column
                 BSMeanArray[j - 5] = edraw.sum(BSarray) / edraw.numOfElements(BSarray);
                 BFMeanArray[j - 5] = edraw.sum(BFarray) / edraw.numOfElements(BFarray);
+                FFSMeanArray[j - 5] = edraw.sum(FFSarray) / edraw.numOfElements(FFSarray);
+                FFFMeanArray[j-5] = edraw.sum(FFFarray) / edraw.numOfElements(FFFarray);
                 // test print array --TEST--
-                System.out.println(Arrays.toString(BFMeanArray));
+                System.out.println(Arrays.toString(FFFMeanArray));
             }
 
             // BLOCK 2: check if baseline value or follow-up
@@ -124,7 +128,7 @@ public class TEST {
             Sheet outSheet1 = outWorkbook.getSheetAt(0);
             Sheet outSheet2 = outWorkbook.getSheetAt(1);
 
-            Row outRow1, outRow2, row2;
+            Row outRow1, outRow2, row2, row3;
             Cell outCell;
             int outTotalRows1 = outSheet1.getPhysicalNumberOfRows();
             int outTotalRows2 = outSheet2.getPhysicalNumberOfRows();
@@ -262,12 +266,7 @@ public class TEST {
                         outWorkbook.write(outWrite);
                         outWrite.close();
                     }
-                    break;
                 }
-            }
-
-            for (int r = 4; r < outTotalRows1; r++) {
-                row2 = outSheet1.getRow(r);
                 if (row2.getCell(50) == null) { // if the velocity cell is == null, then set cell value to array established and then break
                     for (int u = 50; u < 94; u++) {
                         outCell = row2.createCell(u); // maybe this line wrong?
@@ -276,9 +275,33 @@ public class TEST {
                         outWorkbook.write(outWrite);
                         outWrite.close();
                     }
-                    break;
                 }
             }
+
+            // THIS LOOP NOT EXECUTING
+            for(int r = 4; r < outTotalRows2; r++){
+                System.out.println("executed");
+                row3 = outSheet2.getRow(r);
+                if (row3.getCell(3) == null) {
+                    for (int u = 3; u <= 47; u++) {
+                        outCell = row3.createCell(u);
+                        outCell.setCellValue(FFSMeanArray[u - 3]);
+                        FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+                        outWorkbook.write(outWrite);
+                        outWrite.close();
+                    }
+                }
+                if (row3.getCell(50) == null) {
+                    for (int u = 50; u <= 94; u++) {
+                        outCell = row3.createCell(u);
+                        outCell.setCellValue(FFFMeanArray[u - 50]);
+                        FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+                        outWorkbook.write(outWrite);
+                        outWrite.close();
+                    }
+                }
+            }
+
 
 
         } catch (Exception e) {
