@@ -12,8 +12,8 @@ public class ExcelDemoReadAndWrite {
 
         ExcelDemoReadAndWrite edraw = new ExcelDemoReadAndWrite();
 
-        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/PKMAS.xlsx";
-        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/GAIT_ANALYSIS_JAVA_TEST_BACKUP.xlsx";
+        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/run/PKMAS.xlsx";
+        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/run/GAIT_ANALYSIS_JAVA_TEST_BACKUP.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
         // Reading
@@ -56,6 +56,7 @@ public class ExcelDemoReadAndWrite {
                         String text = formatter.formatCellValue(inCell);
                         Double textToDouble = Double.parseDouble(text);
                         array[i] = textToDouble;
+                        System.out.println(Arrays.toString(array));
                     } else {
                         continue;
                     }
