@@ -70,7 +70,7 @@ public class TEST {
                     String memoCheckText = formatter.formatCellValue(memoCheck).toLowerCase().replaceAll("\\s", "");
                     referenceCheck = row1.getCell(3);
                     String referenceCheckText = formatter.formatCellValue(referenceCheck).toLowerCase().replaceAll("\\s", "");
-                    if (memoCheckText.contains("baseline") && referenceCheckText.equals("selfpace")) {
+                    if (memoCheckText.contains("baseline") && (referenceCheckText.equals("selfpace") || referenceCheckText.equals("self-pace"))) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -78,7 +78,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    } else if (memoCheckText.contains("baseline") && referenceCheckText.equals("fastpace")) {
+                    } else if (memoCheckText.contains("baseline") && (referenceCheckText.equals("fastpace") || referenceCheckText.equals("fast-pace"))) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -86,7 +86,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && referenceCheckText.equals("selfpace")) {
+                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("followup") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && (referenceCheckText.equals("selfpace") || referenceCheckText.equals("self-pace"))) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -94,7 +94,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && referenceCheckText.equals("fastpace")) {
+                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("followup") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && (referenceCheckText.equals("fastpace") || referenceCheckText.equals("fast-pace"))) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -102,7 +102,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && referenceCheckText.equals("selfpace")) {
+                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && (referenceCheckText.equals("selfpace") || referenceCheckText.equals("self-pace"))) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -110,7 +110,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && referenceCheckText.equals("fastpace")) {
+                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && (referenceCheckText.equals("fastpace") || referenceCheckText.equals("fast-pace"))) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
