@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54c4d1ab-64e4-44ce-861a-b3a529405594" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GAIT/TEST.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GAIT/TEST.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TEST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TEST.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -48,6 +50,35 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-233160254">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="878" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="878" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="java" value="5" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="5" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -66,8 +97,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TEST.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
-              <caret line="302" column="13" lean-forward="true" selection-start-line="258" selection-start-column="12" selection-end-line="302" selection-end-column="13" />
+            <state relative-caret-position="639">
+              <caret line="277" column="16" lean-forward="true" selection-start-line="277" selection-start-column="16" selection-end-line="277" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -87,6 +118,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>meanArray</find>
+      <find>try</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -117,30 +149,30 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="GAIT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GAIT" type="462c0819:PsiDirectoryNode" />
+              <item name="PKMASParser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PKMASParser" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="GAIT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GAIT" type="462c0819:PsiDirectoryNode" />
+              <item name="PKMASParser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PKMASParser" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1534882905614" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Colin/poi-bin-3.17-20170915/poi-3.17/poi-scratchpad-3.17.jar!/" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535046792004" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -217,9 +249,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.195629" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1977612" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -228,13 +259,13 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49840087" visible="true" weight="0.30911064" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4978678" weight="0.30911064" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.329718" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50159913" side_tool="true" weight="0.30911064" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5021322" side_tool="true" weight="0.30911064" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.329718" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.3286334" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -252,6 +283,13 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/what.java" />
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/io/FileOutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2244">
+          <caret line="237" selection-start-line="237" selection-end-line="237" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GaitData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -264,8 +302,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ExcelDemoReadAndWrite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1989">
-          <caret line="54" column="41" lean-forward="true" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
+        <state relative-caret-position="-397">
+          <caret line="184" column="55" lean-forward="true" selection-start-line="184" selection-start-column="55" selection-end-line="184" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -274,8 +312,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TEST.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="302" column="13" lean-forward="true" selection-start-line="258" selection-start-column="12" selection-end-line="302" selection-end-column="13" />
+        <state relative-caret-position="639">
+          <caret line="277" column="16" lean-forward="true" selection-start-line="277" selection-start-column="16" selection-end-line="277" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

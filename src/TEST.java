@@ -49,20 +49,20 @@ public class TEST {
             Double BSarray[] = new Double[inTotalRows];
             Double BFarray[] = new Double[inTotalRows];
             Double FFSarray[] = new Double[inTotalRows];
-            Double FFFarray[] = new Double [inTotalRows];
+            Double FFFarray[] = new Double[inTotalRows];
+            Double SFSarray[] = new Double[inTotalRows];
+            Double SFFarray[] = new Double[inTotalRows];
 
 
-            Double meanArray[] = new Double[44];
-            Double BSMeanArray[] = new Double [44];
-            Double BFMeanArray[] = new Double [44];
-            Double FFSMeanArray [] = new Double[44];
-            Double FFFMeanArray [] = new Double [44];
-            Double SFSMeanArray [] = new Double [44];
-            Double SFFMeanArray [] = new Double [44];
+            Double BSMeanArray[] = new Double[44];
+            Double BFMeanArray[] = new Double[44];
+            Double FFSMeanArray[] = new Double[44];
+            Double FFFMeanArray[] = new Double[44];
+            Double SFSMeanArray[] = new Double[44];
+            Double SFFMeanArray[] = new Double[44];
 
             for (int j = 5; j < 49; j++) {
                 for (int i = 2; i < inTotalRows; i++) {
-
                     row1 = inSheet.getRow(i);
                     inCell = row1.getCell(j);
 
@@ -70,7 +70,6 @@ public class TEST {
                     String memoCheckText = formatter.formatCellValue(memoCheck).toLowerCase().replaceAll("\\s", "");
                     referenceCheck = row1.getCell(3);
                     String referenceCheckText = formatter.formatCellValue(referenceCheck).toLowerCase().replaceAll("\\s", "");
-
                     if (memoCheckText.equals("baseline") && referenceCheckText.equals("selfpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
@@ -79,7 +78,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    }else if (memoCheckText.equals("baseline") && referenceCheckText.equals("fastpace")) {
+                    } else if (memoCheckText.equals("baseline") && referenceCheckText.equals("fastpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -87,7 +86,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    }else if (memoCheckText.equals("follow-up") && referenceCheckText.equals("selfpace")) {
+                    } else if (memoCheckText.equals("follow-up") && referenceCheckText.equals("selfpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -95,7 +94,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    }else if (memoCheckText.equals("follow-up") && referenceCheckText.equals("fastpace")) {
+                    } else if (memoCheckText.equals("follow-up") && referenceCheckText.equals("fastpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -105,13 +104,14 @@ public class TEST {
                         }
                     }
                 }
+
                 // calculating mean for column
                 BSMeanArray[j - 5] = edraw.sum(BSarray) / edraw.numOfElements(BSarray);
                 BFMeanArray[j - 5] = edraw.sum(BFarray) / edraw.numOfElements(BFarray);
                 FFSMeanArray[j - 5] = edraw.sum(FFSarray) / edraw.numOfElements(FFSarray);
-                FFFMeanArray[j-5] = edraw.sum(FFFarray) / edraw.numOfElements(FFFarray);
+                FFFMeanArray[j - 5] = edraw.sum(FFFarray) / edraw.numOfElements(FFFarray);
                 // test print array --TEST--
-                System.out.println(Arrays.toString(FFFMeanArray));
+//                System.out.println(Arrays.toString(FFFMeanArray));
             }
 
             // BLOCK 2: check if baseline value or follow-up
@@ -128,7 +128,7 @@ public class TEST {
             Sheet outSheet1 = outWorkbook.getSheetAt(0);
             Sheet outSheet2 = outWorkbook.getSheetAt(1);
 
-            Row outRow1, outRow2, row2, row3;
+            Row outRow1, outRow2, row2, row3, createRow;
             Cell outCell;
             int outTotalRows1 = outSheet1.getPhysicalNumberOfRows();
             int outTotalRows2 = outSheet2.getPhysicalNumberOfRows();
@@ -156,156 +156,57 @@ public class TEST {
             }
 
 
-            // check if baseline or follow-up first
-//            if (edraw.isBaseline(memoText) == true) {
-//                if (edraw.isSelfPace(referenceText) == true) { // check if reference text = self pace
-//                    for (int r = 4; r < outTotalRows1; r++) {
-//                        row2 = outSheet1.getRow(r);
-//                        if (row2.getCell(3) == null) { // if the velocity cell is == null, then set cell value to array established and then break
-//                            for (int t = 3; t <= 47; t++) {
-//                                outCell = row2.createCell(t); // maybe this line wrong?
-//                                outCell.setCellValue(BSMeanArray[t - 3]);
-//                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-//                                outWorkbook.write(outWrite);
-//                                outWrite.close();
-//                            }
-//                            break;
-//                        }
-//                    }
-//                } else if (edraw.isFastPace(referenceText) == true) {
-//                    for (int r = 4; r < outTotalRows1; r++) {
-//                        row2 = outSheet1.getRow(r);
-//                        if (row2.getCell(50) == null) { // if the velocity cell is == null, then set cell value to array established and then break
-//                            for (int u = 50; u < 94; u++) {
-//                                outCell = row2.createCell(u); // maybe this line wrong?
-//                                outCell.setCellValue(meanArray[u - 50]);
-//                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-//                                outWorkbook.write(outWrite);
-//                                outWrite.close();
-//                            }
-//                            break;
-//                        }
-//                    }
-//                }
-//            } else if (edraw.isFollowUp(memoText) == true) {
-//                System.out.println("follow up block reached");
-//
-//                if (edraw.isSelfPace(referenceText) == true) {
-//                    System.out.println("follow up self pace block reached");
-//                    for (int r = 4; r < outTotalRows2; r++) {
-//                        row2 = outSheet2.getRow(r);
-//                        if (row2.getCell(3) == null) {
-//                            for (int u = 3; u <= 47; u++) {
-//                                outCell = row2.createCell(u);
-//                                outCell.setCellValue(meanArray[u - 3]);
-//                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-//                                outWorkbook.write(outWrite);
-//                                outWrite.close();
-//                            }
-//                            break;
-//                        }
-//                    }
-//                } else if (edraw.isFastPace(referenceText) == true) {
-//                    System.out.println("follow up fast pace block reached");
-//                    for (int u = 4; u < outTotalRows2; u++) {
-//                        row2 = outSheet2.getRow(u);
-//                        if (row2.getCell(50) == null) {
-//                            for (int q = 50; q < 94; q++) {
-//                                outCell = row2.createCell(q);
-//                                outCell.setCellValue(meanArray[q - 50]);
-//                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-//                                outWorkbook.write(outWrite);
-//                                outWrite.close();
-//                            }
-//                            break;
-//                        }
-//                    }
-//                }
-//            } else if (edraw.isSecondFollowUp(memoText) == true) {
-//                System.out.println("second follow up block reached");
-//                if (edraw.isSelfPace(referenceText) == true) {
-//                    System.out.println("follow up self pace block reached");
-//                    for (int r = 4; r < outTotalRows2; r++) {
-//                        row2 = outSheet2.getRow(r);
-//                        if (row2.getCell(97) == null) {
-//                            for (int u = 97; u <= 141; u++) {
-//                                outCell = row2.createCell(u);
-//                                outCell.setCellValue(meanArray[u - 97]);
-//                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-//                                outWorkbook.write(outWrite);
-//                                outWrite.close();
-//                            }
-//                            break;
-//                        }
-//                    }
-//                }else if(edraw.isFastPace(referenceText) == true){
-//                    System.out.println("follow up fast pace block reached");
-//                    for (int r = 4; r < outTotalRows2; r++) {
-//                        row2 = outSheet2.getRow(r);
-//                        if (row2.getCell(144) == null) {
-//                            for (int u = 144; u <= 188; u++) {
-//                                outCell = row2.createCell(u);
-//                                outCell.setCellValue(meanArray[u - 144]);
-//                                FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-//                                outWorkbook.write(outWrite);
-//                                outWrite.close();
-//                            }
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
+
+
+
+
+
 
             for (int r = 4; r < outTotalRows1; r++) {
                 row2 = outSheet1.getRow(r);
+                row3 = outSheet2.getRow(r);
                 if (row2.getCell(3) == null) {
-                    for (int t = 3; t <= 47; t++) {
+                    for (int t = 3; t < 47; t++) {
                         outCell = row2.createCell(t);
                         outCell.setCellValue(BSMeanArray[t - 3]);
-                        FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-                        outWorkbook.write(outWrite);
-                        outWrite.close();
                     }
-                }
-                if (row2.getCell(50) == null) { // if the velocity cell is == null, then set cell value to array established and then break
                     for (int u = 50; u < 94; u++) {
                         outCell = row2.createCell(u); // maybe this line wrong?
                         outCell.setCellValue(BFMeanArray[u - 50]);
-                        FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-                        outWorkbook.write(outWrite);
-                        outWrite.close();
                     }
+                    for (int v = 3; v < 47; v++){
+                        outCell = row3.createCell(v);
+                        outCell.setCellValue(FFSMeanArray[v-3]);
+                    }
+                    for(int w = 50; w < 94; w++){
+                        outCell = row3.createCell(w);
+                        outCell.setCellValue(FFFMeanArray[w-50]);
+                    }
+                    break;
+                }else{
+                    continue;
                 }
             }
+            System.out.println("foo");
+            FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+            outWorkbook.write(outWrite);
+            outWrite.close();
 
-            // THIS LOOP NOT EXECUTING
-            for(int r = 4; r < outTotalRows2; r++){
-                System.out.println("executed");
-                row3 = outSheet2.getRow(r);
-                if (row3.getCell(3) == null) {
-                    for (int u = 3; u <= 47; u++) {
-                        outCell = row3.createCell(u);
-                        outCell.setCellValue(FFSMeanArray[u - 3]);
-                        FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-                        outWorkbook.write(outWrite);
-                        outWrite.close();
-                    }
-                }
-                if (row3.getCell(50) == null) {
-                    for (int u = 50; u <= 94; u++) {
-                        outCell = row3.createCell(u);
-                        outCell.setCellValue(FFFMeanArray[u - 50]);
-                        FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-                        outWorkbook.write(outWrite);
-                        outWrite.close();
-                    }
-                }
-            }
+
+
+
+
+
+
+
+
+
 
 
 
         } catch (Exception e) {
             System.out.println(e);
+            e.printStackTrace();
         }
 
 // FUNCTIONS
