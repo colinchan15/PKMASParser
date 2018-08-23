@@ -12,7 +12,7 @@ public class TEST {
 
         TEST edraw = new TEST();
 
-        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/PKMAS.xlsx";
+        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/PKMAS2.xlsx";
         String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/TEST.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
@@ -70,7 +70,7 @@ public class TEST {
                     String memoCheckText = formatter.formatCellValue(memoCheck).toLowerCase().replaceAll("\\s", "");
                     referenceCheck = row1.getCell(3);
                     String referenceCheckText = formatter.formatCellValue(referenceCheck).toLowerCase().replaceAll("\\s", "");
-                    if (memoCheckText.equals("baseline") && referenceCheckText.equals("selfpace")) {
+                    if (memoCheckText.contains("baseline") && referenceCheckText.equals("selfpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -78,7 +78,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    } else if (memoCheckText.equals("baseline") && referenceCheckText.equals("fastpace")) {
+                    } else if (memoCheckText.contains("baseline") && referenceCheckText.equals("fastpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -86,7 +86,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    } else if (memoCheckText.equals("follow-up") && referenceCheckText.equals("selfpace")) {
+                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup")) && referenceCheckText.equals("selfpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -94,11 +94,27 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    } else if (memoCheckText.equals("follow-up") && referenceCheckText.equals("fastpace")) {
+                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup")) && referenceCheckText.equals("fastpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
                             FFFarray[i] = textToDouble;
+                        } else {
+                            continue;
+                        }
+                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && referenceCheckText.equals("selfpace")) {
+                        if (inCell != null) {
+                            String text = formatter.formatCellValue(inCell);
+                            Double textToDouble = Double.parseDouble(text);
+                            SFSarray[i] = textToDouble;
+                        } else {
+                            continue;
+                        }
+                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && referenceCheckText.equals("fastpace")) {
+                        if (inCell != null) {
+                            String text = formatter.formatCellValue(inCell);
+                            Double textToDouble = Double.parseDouble(text);
+                            SFFarray[i] = textToDouble;
                         } else {
                             continue;
                         }
@@ -110,6 +126,8 @@ public class TEST {
                 BFMeanArray[j - 5] = edraw.sum(BFarray) / edraw.numOfElements(BFarray);
                 FFSMeanArray[j - 5] = edraw.sum(FFSarray) / edraw.numOfElements(FFSarray);
                 FFFMeanArray[j - 5] = edraw.sum(FFFarray) / edraw.numOfElements(FFFarray);
+                SFSMeanArray[j - 5] = edraw.sum(SFSarray) / edraw.numOfElements(SFSarray);
+                SFFMeanArray[j - 5] = edraw.sum(SFFarray) / edraw.numOfElements(SFFarray);
                 // test print array --TEST--
 //                System.out.println(Arrays.toString(FFFMeanArray));
             }
@@ -182,7 +200,16 @@ public class TEST {
                         outCell = row3.createCell(w);
                         outCell.setCellValue(FFFMeanArray[w-50]);
                     }
+                    for(int w = 97; w < 141; w++){
+                        outCell = row3.createCell(w);
+                        outCell.setCellValue(SFSMeanArray[w-97]);
+                    }
+                    for(int w = 144; w < 188; w++){
+                        outCell = row3.createCell(w);
+                        outCell.setCellValue(SFFMeanArray[w-144]);
+                    }
                     break;
+
                 }else{
                     continue;
                 }
