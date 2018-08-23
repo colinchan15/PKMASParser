@@ -12,7 +12,7 @@ public class TEST {
 
         TEST edraw = new TEST();
 
-        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/PKMAS2.xlsx";
+        String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/PKMAS.xlsx";
         String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/TEST.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
@@ -86,7 +86,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup")) && referenceCheckText.equals("selfpace")) {
+                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && referenceCheckText.equals("selfpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -94,7 +94,7 @@ public class TEST {
                         } else {
                             continue;
                         }
-                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup")) && referenceCheckText.equals("fastpace")) {
+                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && referenceCheckText.equals("fastpace")) {
                         if (inCell != null) {
                             String text = formatter.formatCellValue(inCell);
                             Double textToDouble = Double.parseDouble(text);
@@ -146,7 +146,7 @@ public class TEST {
             Sheet outSheet1 = outWorkbook.getSheetAt(0);
             Sheet outSheet2 = outWorkbook.getSheetAt(1);
 
-            Row outRow1, outRow2, row2, row3, createRow;
+            Row outRow1, outRow2, row2, row3;
             Cell outCell;
             int outTotalRows1 = outSheet1.getPhysicalNumberOfRows();
             int outTotalRows2 = outSheet2.getPhysicalNumberOfRows();
@@ -173,13 +173,7 @@ public class TEST {
                 }
             }
 
-
-
-
-
-
-
-
+            // BLOCK 5: Gets the arrays and prints to excel sheet
             for (int r = 4; r < outTotalRows1; r++) {
                 row2 = outSheet1.getRow(r);
                 row3 = outSheet2.getRow(r);
@@ -218,17 +212,6 @@ public class TEST {
             FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
             outWorkbook.write(outWrite);
             outWrite.close();
-
-
-
-
-
-
-
-
-
-
-
 
 
         } catch (Exception e) {
