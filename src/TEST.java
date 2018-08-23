@@ -130,6 +130,7 @@ public class TEST {
                 SFSMeanArray[j - 5] = edraw.sum(SFSarray) / edraw.numOfElements(SFSarray);
                 SFFMeanArray[j - 5] = edraw.sum(SFFarray) / edraw.numOfElements(SFFarray);
                 // test print array --TEST--
+                System.out.println(Arrays.toString(FFSarray));
                 System.out.println(edraw.sum(FFSarray));
                 System.out.println(edraw.numOfElements(FFSarray));
                 System.out.println(Arrays.toString(FFSMeanArray));
