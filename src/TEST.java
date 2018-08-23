@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 
 
@@ -129,7 +130,9 @@ public class TEST {
                 SFSMeanArray[j - 5] = edraw.sum(SFSarray) / edraw.numOfElements(SFSarray);
                 SFFMeanArray[j - 5] = edraw.sum(SFFarray) / edraw.numOfElements(SFFarray);
                 // test print array --TEST--
-//                System.out.println(Arrays.toString(FFFMeanArray));
+                System.out.println(edraw.sum(FFSarray));
+                System.out.println(edraw.numOfElements(FFSarray));
+                System.out.println(Arrays.toString(FFSMeanArray));
             }
 
             // BLOCK 2: check if baseline value or follow-up
@@ -208,10 +211,12 @@ public class TEST {
                     continue;
                 }
             }
-            System.out.println("foo");
-            FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-            outWorkbook.write(outWrite);
-            outWrite.close();
+
+            // BLOCK 6: PRINT TO EXCEL
+//            System.out.println("foo");
+//            FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+//            outWorkbook.write(outWrite);
+//            outWrite.close();
 
 
         } catch (Exception e) {
