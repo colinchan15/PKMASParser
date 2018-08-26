@@ -8,13 +8,13 @@ import java.sql.SQLOutput;
 import java.util.Arrays;
 
 
-public class TEST {
+public class TEST2 {
     public static void main(String[] args) {
 
-        TEST edraw = new TEST();
+        TEST2 edraw = new TEST2();
 
         String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/PKMAS.xlsx";
-        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/FINAL.xlsx";
+        String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/TEST.xlsx";
         String location = "C:/Users/Protokinetics/Desktop/Colin";
 
         // Reading
@@ -47,6 +47,13 @@ public class TEST {
             // End of reading block
 
             // BLOCK 1: calculates mean for each column
+            Double BSarray[] = new Double[inTotalRows];
+            Double BFarray[] = new Double[inTotalRows];
+//            Double FFSarray[] = new Double[inTotalRows];
+            Double FFFarray[] = new Double[inTotalRows];
+            Double SFSarray[] = new Double[inTotalRows];
+            Double SFFarray[] = new Double[inTotalRows];
+
 
             Double BSMeanArray[] = new Double[44];
             Double BFMeanArray[] = new Double[44];
@@ -56,12 +63,7 @@ public class TEST {
             Double SFFMeanArray[] = new Double[44];
 
             for (int j = 5; j < 49; j++) {
-                Double BSarray[] = new Double[inTotalRows];
-                Double BFarray[] = new Double[inTotalRows];
                 Double FFSarray[] = new Double[inTotalRows];
-                Double FFFarray[] = new Double[inTotalRows];
-                Double SFSarray[] = new Double[inTotalRows];
-                Double SFFarray[] = new Double[inTotalRows];
                 for (int i = 2; i < inTotalRows; i++) {
                     row1 = inSheet.getRow(i);
                     inCell = row1.getCell(j);
@@ -70,54 +72,59 @@ public class TEST {
                     String memoCheckText = formatter.formatCellValue(memoCheck).toLowerCase().replaceAll("\\s", "");
                     referenceCheck = row1.getCell(3);
                     String referenceCheckText = formatter.formatCellValue(referenceCheck).toLowerCase().replaceAll("\\s", "");
-                    if (memoCheckText.contains("baseline") && (referenceCheckText.equals("selfpace") || referenceCheckText.equals("self-pace"))) {
+//                    if (memoCheckText.contains("baseline") && (referenceCheckText.equals("selfpace") || referenceCheckText.equals("self-pace"))) {
+//                        if (inCell != null) {
+//                            String text = formatter.formatCellValue(inCell);
+//                            Double textToDouble = Double.parseDouble(text);
+//                            BSarray[i] = textToDouble;
+//                        } else {
+//                            continue;
+//                        }
+//                    } else if (memoCheckText.contains("baseline") && (referenceCheckText.equals("fastpace") || referenceCheckText.equals("fast-pace"))) {
+//                        if (inCell != null) {
+//                            String text = formatter.formatCellValue(inCell);
+//                            Double textToDouble = Double.parseDouble(text);
+//                            BFarray[i] = textToDouble;
+//                        } else {
+//                            continue;
+//                        }
+                    if ((memoCheckText.equals("follow-up") || memoCheckText.equals("followup") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && (referenceCheckText.equals("selfpace") || referenceCheckText.equals("self-pace"))) {
+
                         if (inCell != null) {
+//                            System.out.println(inCell);
                             String text = formatter.formatCellValue(inCell);
+//                            System.out.println(text);
                             Double textToDouble = Double.parseDouble(text);
-                            BSarray[i] = textToDouble;
-                        } else {
-                            continue;
-                        }
-                    } else if (memoCheckText.contains("baseline") && (referenceCheckText.equals("fastpace") || referenceCheckText.equals("fast-pace"))) {
-                        if (inCell != null) {
-                            String text = formatter.formatCellValue(inCell);
-                            Double textToDouble = Double.parseDouble(text);
-                            BFarray[i] = textToDouble;
-                        } else {
-                            continue;
-                        }
-                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("followup") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && (referenceCheckText.equals("selfpace") || referenceCheckText.equals("self-pace"))) {
-                        if (inCell != null) {
-                            String text = formatter.formatCellValue(inCell);
-                            Double textToDouble = Double.parseDouble(text);
+//                            System.out.println(textToDouble);
                             FFSarray[i] = textToDouble;
+//                            System.out.println(Arrays.toString(FFSarray));
                         } else {
                             continue;
                         }
-                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("followup") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && (referenceCheckText.equals("fastpace") || referenceCheckText.equals("fast-pace"))) {
-                        if (inCell != null) {
-                            String text = formatter.formatCellValue(inCell);
-                            Double textToDouble = Double.parseDouble(text);
-                            FFFarray[i] = textToDouble;
-                        } else {
-                            continue;
-                        }
-                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && (referenceCheckText.equals("selfpace") || referenceCheckText.equals("self-pace"))) {
-                        if (inCell != null) {
-                            String text = formatter.formatCellValue(inCell);
-                            Double textToDouble = Double.parseDouble(text);
-                            SFSarray[i] = textToDouble;
-                        } else {
-                            continue;
-                        }
-                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && (referenceCheckText.equals("fastpace") || referenceCheckText.equals("fast-pace"))) {
-                        if (inCell != null) {
-                            String text = formatter.formatCellValue(inCell);
-                            Double textToDouble = Double.parseDouble(text);
-                            SFFarray[i] = textToDouble;
-                        } else {
-                            continue;
-                        }
+//                    } else if ((memoCheckText.equals("follow-up") || memoCheckText.equals("followup") || memoCheckText.equals("1yearfollow-up") || memoCheckText.equals("1yearfollowup") || memoCheckText.equals("followup")) && (referenceCheckText.equals("fastpace") || referenceCheckText.equals("fast-pace"))) {
+//                        if (inCell != null) {
+//                            String text = formatter.formatCellValue(inCell);
+//                            Double textToDouble = Double.parseDouble(text);
+//                            FFFarray[i] = textToDouble;
+//                        } else {
+//                            continue;
+//                        }
+//                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && (referenceCheckText.equals("selfpace") || referenceCheckText.equals("self-pace"))) {
+//                        if (inCell != null) {
+//                            String text = formatter.formatCellValue(inCell);
+//                            Double textToDouble = Double.parseDouble(text);
+//                            SFSarray[i] = textToDouble;
+//                        } else {
+//                            continue;
+//                        }
+//                    }else if ((memoCheckText.equals("2yearfollow-up") || memoCheckText.equals("2yearfollowup")) && (referenceCheckText.equals("fastpace") || referenceCheckText.equals("fast-pace"))) {
+//                        if (inCell != null) {
+//                            String text = formatter.formatCellValue(inCell);
+//                            Double textToDouble = Double.parseDouble(text);
+//                            SFFarray[i] = textToDouble;
+//                        } else {
+//                            continue;
+//                        }
                     }
                 }
 
@@ -213,10 +220,10 @@ public class TEST {
             }
 
             // BLOCK 6: PRINT TO EXCEL
-            System.out.println("foo");
-            FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
-            outWorkbook.write(outWrite);
-            outWrite.close();
+//            System.out.println("foo");
+//            FileOutputStream outWrite = new FileOutputStream(new File(outputFileName));
+//            outWorkbook.write(outWrite);
+//            outWrite.close();
 
 
         } catch (Exception e) {
