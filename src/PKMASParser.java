@@ -8,10 +8,10 @@ import java.sql.SQLOutput;
 import java.util.Arrays;
 
 
-public class TEST {
+public class PKMASParser {
     public static void main(String[] args) {
 
-        TEST edraw = new TEST();
+        PKMASParser edraw = new PKMASParser();
 
         String inputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/PKMAS.xlsx";
         String outputFileName = "C:/Users/Protokinetics/Desktop/Colin/backups/FINAL.xlsx";
