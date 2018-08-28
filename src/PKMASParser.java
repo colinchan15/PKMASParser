@@ -132,7 +132,7 @@ public class PKMASParser {
 //                System.out.println(Arrays.toString(FFSarray));
 //                System.out.println(edraw.sum(FFSarray));
 //                System.out.println(edraw.numOfElements(FFSarray));
-                System.out.println(Arrays.toString(FFSMeanArray));
+//                System.out.println(Arrays.toString(FFSMeanArray));
             }
 
             // BLOCK 2: check if baseline value or follow-up
